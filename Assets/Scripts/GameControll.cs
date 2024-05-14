@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameControll : MonoBehaviour
 {
     public static GameControll instance;
-    public TMP_Text healthText;
+    //public TMP_Text healthText;
+    public TMP_Text dead;
     private static int health=8;  //здоровье
     private static int maxHealth=8;   //max здоровье
     //private static float moveSpeed=5f; 
@@ -19,6 +22,7 @@ public class GameControll : MonoBehaviour
     // инициализации любых переменных или игровых объектов, необходимых перед запуском игры
     private void Awake()
     {
+        health = maxHealth;
         if (instance==null)
         {
             instance = this;
@@ -28,11 +32,11 @@ public class GameControll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.text = "Health: " + health;
+        //healthText.text = "Health: " + health;
     }
     public static void DamagePlayer(int damage) //метод, чтобы наносить боль
     {
-        health-= damage;
+            health -= damage;
         if (Health<=0)
         {
             KillPlayer();
@@ -44,6 +48,8 @@ public class GameControll : MonoBehaviour
     }
     private static void KillPlayer()    //чтобы убить
     {
-
+        GameControll.instance.dead.gameObject.SetActive(true);
+        new WaitForSeconds(10f);
+        SceneManager.LoadScene("SampleScene");
     }
 }

@@ -13,6 +13,7 @@ public class Room : MonoBehaviour
     public Door topDoor;
     public Door bottomDoor;
     public List<Door> doors= new List<Door>();
+    
     private bool updatedDoors = false;
     public Room (int x, int y)
     {

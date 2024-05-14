@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -86,10 +87,10 @@ public class EnemyControll : MonoBehaviour
         choostDir= true;
         //чуть чуть ждем и вращаемся
         yield return new WaitForSeconds(Random.Range(2f, 8f));
-        randomDir = new Vector3(0,0, Random.Range(0, 360));
-        //куда-то идем
-        Quaternion nextRotation = Quaternion.Euler(randomDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));
+        //randomDir = new Vector3(0,0, Random.Range(0, 360));
+        ////куда-то идем
+        //Quaternion nextRotation = Quaternion.Euler(randomDir);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));
         choostDir = false;
     }
     void Wander()
@@ -113,6 +114,8 @@ public class EnemyControll : MonoBehaviour
     }
     public void Death()
     {
+        //RoomControll.instance.UpdateRoom();
+        RoomControll.instance.StartCoroutine(RoomControll.instance.RoomCoroutine());
         Destroy(gameObject);
     }
     void Attack()

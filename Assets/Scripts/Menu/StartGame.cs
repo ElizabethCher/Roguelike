@@ -10,7 +10,7 @@ public class StartGame : MonoBehaviour
     public void ExitPressed()
     {
         SceneManager.LoadScene("RefinementScene");
-        Application.Quit();
+        //Application.Quit();
     }
     public void Exit()
     {

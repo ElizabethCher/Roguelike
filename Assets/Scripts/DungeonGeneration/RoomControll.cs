@@ -24,7 +24,7 @@ public class RoomControll : MonoBehaviour
     public string GetRandomRoomName()
     {
         string[] possibleRooms = new string[]        {
-            "Empty",            "Basic1"
+            /*"Empty",*/ "Basic1", "Bas"
         }; return possibleRooms[Random.Range(0, possibleRooms.Length)];
     }
 
@@ -34,11 +34,18 @@ public class RoomControll : MonoBehaviour
     }
     public void OnPlayerEnterRoom(Room room)
     {
+
         CameraControll.instance.currRoom= room;
         currRoom = room;
+        StartCoroutine(RoomCoroutine());
+
+    }
+    public IEnumerator RoomCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
         UpdateRoom();
     }
-    private void UpdateRoom()
+    public void UpdateRoom()
     {
         foreach (Room room in loadedRoom)
         {
@@ -52,18 +59,18 @@ public class RoomControll : MonoBehaviour
                         enemy.notInRoom = true;
                         Debug.Log("Not in room");
                     }
-                    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
-                    //{ 
-                    //    door.doorCollider.SetActive(false); 
-                    //} 
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
                 }
-                //else 
-                //{ 
-                //    foreach (Door door in room.GetComponentsInChildren<Door>()) 
-                //    { 
-                //        door.doorCollider.SetActive(false); 
-                //    } 
-                //} 
+                else
+                {
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
+                }
             }
             else
             {
@@ -75,22 +82,18 @@ public class RoomControll : MonoBehaviour
                         enemy.notInRoom = false;
                         Debug.Log("In in room");
                     }
-                    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
-                    //{ 
-                    //    door.doorCollider.SetActive(true); 
-                    //} 
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(true);
+                    }
                 }
-                //else 
-                //{ 
-                //    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
-                //    //{ 
-                //    //    door.doorCollider.SetActive(false); 
-                //    //} 
-                //    foreach (Door door in room.GetComponentsInChildren<Door>()) 
-                //    { 
-                //        door.doorCollider.SetActive(false); 
-                //    } 
-                //} 
+                else
+                {
+                    foreach (Door door in room.GetComponentsInChildren<Door>())
+                    {
+                        door.doorCollider.SetActive(false);
+                    }
+                }
             }
         }
     }
@@ -180,12 +183,13 @@ public class RoomControll : MonoBehaviour
             }
             else if (spawnedBoosRoom && !updatedRooms)
             {
+
                 foreach (Room room in loadedRoom)
                 {
                     room.RemoveUnconnectedDoors();
                 }
                 UpdateRoom();
-                updatedRooms= true;
+                updatedRooms = true;
             }
             return;
         }

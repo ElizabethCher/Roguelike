@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
             lastFire= Time.time;//меняем время последнего огня
         }
         rigidbody.velocity= new Vector3(horizontal*speed, vertical*speed, 0);   //скорость равная вектору 3
-        collectionText.text = "Items Collected: " +collectedAmount;
+        //collectionText.text = "Items Collected: " +collectedAmount;
     }
 
     void Shoot(float x , float y) //метод стрельбы

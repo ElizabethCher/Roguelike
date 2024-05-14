@@ -9,15 +9,33 @@ public class Door : MonoBehaviour
         left, right, top, bottom
     };
     public DoorType doorType;
-    // Start is called before the first frame update
-    void Start()
+    private GameObject player;
+    public GameObject doorCollider;
+    private float withOffset = 15f;
+    private float withOffset1 = 8f;
+    private void Start()
     {
-        
+        player = GameObject.FindGameObjectWithTag("Player");
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        
+        if (coll.tag == "Player")
+        {
+            switch(doorType)
+            {
+                case DoorType.left:
+                    player.transform.position = new Vector3(transform.position.x-withOffset, transform.position.y);
+                    break;
+                case DoorType.right:
+                    player.transform.position = new Vector3(transform.position.x+ withOffset, transform.position.y);
+                    break;
+                case DoorType.bottom:
+                    player.transform.position = new Vector3(transform.position.x, transform.position.y - withOffset1);
+                    break;
+                case DoorType.top:
+                    player.transform.position = new Vector3(transform.position.x, transform.position.y + withOffset1);
+                    break;
+            }
+        }
     }
 }
