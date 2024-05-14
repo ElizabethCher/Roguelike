@@ -1,10 +1,12 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyControll : MonoBehaviour
 {
     public enum EnemyState  //состояние противника
     {
+        Idle,
         Wander, //исследует
         Follow, //преследует
         Die, //погиб
@@ -15,9 +17,10 @@ public class EnemyControll : MonoBehaviour
         Melee,  //противник ближнего боя
         Ranged  //противник дальнего боя
     };
+    public bool notInRoom = false;
     public GameObject bulletPrefad; //пуля
     GameObject player; //игрок
-    public EnemyState currState= EnemyState.Wander; //по умолчанию враг блуждает
+    public EnemyState currState= EnemyState.Idle; //по умолчанию враг блуждает
     public EnemyType enemyType;
     public float range; //расстояние на котором враг видит
     public float speed; //скорость противника
@@ -51,19 +54,27 @@ public class EnemyControll : MonoBehaviour
                 Attack();
                 break;
         }
-        //если игрок в диапозоне врага
-        if (IsPlayerRange(range) && currState != EnemyState.Die)
+        if (!notInRoom)
         {
-            currState = EnemyState.Follow; //то враг начинает преследовать
+            //если игрок в диапозоне врага
+            if (IsPlayerRange(range) && currState != EnemyState.Die)
+            {
+                currState = EnemyState.Follow; //то враг начинает преследовать
+            }
+            else if (!IsPlayerRange(range) && currState != EnemyState.Die)
+            {
+                currState = EnemyState.Wander; //то враг продолжает гулять
+            }
+            if (Vector3.Distance(transform.position, player.transform.position) <= attackingRange)
+            {
+                currState = EnemyState.Attack;
+            }
         }
-        else if (!IsPlayerRange(range) && currState != EnemyState.Die)
+        else
         {
-            currState = EnemyState.Wander; //то враг продолжает гулять
+            currState=EnemyState.Idle;
         }
-        if (Vector3.Distance(transform.position, player.transform.position) <= attackingRange)
-        {
-            currState = EnemyState.Attack;
-        }
+
     }
     private bool IsPlayerRange(float range) //преследовать или нет
     {

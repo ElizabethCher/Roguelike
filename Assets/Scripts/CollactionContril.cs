@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -11,8 +10,6 @@ public class Item
 
 public class CollactionContril : MonoBehaviour
 {
-    public TMP_Text CoinText;
-    public static int coin = 0;
     public Item item;
     public int healthChange; //изменение состояния здоровья
     public int coinChange; //изменение состояния здоровья
@@ -27,7 +24,6 @@ public class CollactionContril : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CoinText.text = ": " + coin;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +31,6 @@ public class CollactionContril : MonoBehaviour
         if (collision.tag == "Player")  //если столкнулся с кем-то у кого tag == "Player"
         {
             PlayerController.collectedAmount++;
-            coin += coinChange;
             GameControll.HealPlayer(healthChange);
             Destroy(gameObject);
         }

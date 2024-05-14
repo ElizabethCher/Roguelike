@@ -21,6 +21,12 @@ public class RoomControll : MonoBehaviour
     bool isLoadRoom = false;    //загружена ли эта комната
     bool spawnedBoosRoom = false;
     bool updatedRooms =false;
+    public string GetRandomRoomName()
+    {
+        string[] possibleRooms = new string[]        {
+            "Empty",            "Basic1"
+        }; return possibleRooms[Random.Range(0, possibleRooms.Length)];
+    }
 
     private void Awake()
     {
@@ -30,6 +36,63 @@ public class RoomControll : MonoBehaviour
     {
         CameraControll.instance.currRoom= room;
         currRoom = room;
+        UpdateRoom();
+    }
+    private void UpdateRoom()
+    {
+        foreach (Room room in loadedRoom)
+        {
+            if (currRoom != room)
+            {
+                EnemyControll[] enemies = room.GetComponentsInChildren<EnemyControll>();
+                if (enemies != null)
+                {
+                    foreach (EnemyControll enemy in enemies)
+                    {
+                        enemy.notInRoom = true;
+                        Debug.Log("Not in room");
+                    }
+                    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
+                    //{ 
+                    //    door.doorCollider.SetActive(false); 
+                    //} 
+                }
+                //else 
+                //{ 
+                //    foreach (Door door in room.GetComponentsInChildren<Door>()) 
+                //    { 
+                //        door.doorCollider.SetActive(false); 
+                //    } 
+                //} 
+            }
+            else
+            {
+                EnemyControll[] enemies = room.GetComponentsInChildren<EnemyControll>();
+                if (enemies /*!= null*/.Length > 0)
+                {
+                    foreach (EnemyControll enemy in enemies)
+                    {
+                        enemy.notInRoom = false;
+                        Debug.Log("In in room");
+                    }
+                    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
+                    //{ 
+                    //    door.doorCollider.SetActive(true); 
+                    //} 
+                }
+                //else 
+                //{ 
+                //    //foreach (Door door in room.GetComponentsInChildren<Door>()) 
+                //    //{ 
+                //    //    door.doorCollider.SetActive(false); 
+                //    //} 
+                //    foreach (Door door in room.GetComponentsInChildren<Door>()) 
+                //    { 
+                //        door.doorCollider.SetActive(false); 
+                //    } 
+                //} 
+            }
+        }
     }
     public bool DoesRoomExist(int x, int y) //проверяем существует ли такая комната
     {
@@ -121,6 +184,7 @@ public class RoomControll : MonoBehaviour
                 {
                     room.RemoveUnconnectedDoors();
                 }
+                UpdateRoom();
                 updatedRooms= true;
             }
             return;
