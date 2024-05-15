@@ -3,14 +3,22 @@ using UnityEngine;
 
 public class LevelUp : MonoBehaviour
 {
+    public static int Level = 1;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        Debug.Log("Уровень: "+ Level);
+        if (collision.tag == "Player" && Level == 1)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-
+            SceneManager.LoadScene("BasementMain2");
+            RecordsControll.RecordWrite();
         }
-
+        else if (collision.tag == "Player" && Level == 3)
+        {
+            SceneManager.LoadScene("SampleScene");
+            RecordsControll.RecordWrite();
+        }
+        Level++;
     }
 
 }

@@ -26,7 +26,7 @@ public class Room : MonoBehaviour
         //проверяем находится ли комната в правильной сцене
         if (RoomControll.instance == null)
         {
-            Debug.Log("You pressed play in the wrong scene!");
+          //  Debug.Log("You pressed play in the wrong scene!");
             return;
         }
         Door[] ds = GetComponentsInChildren<Door>();
@@ -120,11 +120,23 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (name.Contains("End") && !updatedDoors)
+        if (LevelUp.Level == 1)
         {
-            RemoveUnconnectedDoors();
-            updatedDoors= true;
+            if (name.Contains("End") && !updatedDoors)
+            {
+                RemoveUnconnectedDoors();
+                updatedDoors= true;
+            }
         }
+        else
+        {
+            if (name.Contains("End2") && !updatedDoors)
+            {
+                RemoveUnconnectedDoors();
+                updatedDoors = true;
+            }
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D coll)
     {

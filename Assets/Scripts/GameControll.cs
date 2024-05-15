@@ -8,6 +8,7 @@ public class GameControll : MonoBehaviour
     public static GameControll instance;
     //public TMP_Text healthText;
     public TMP_Text dead;
+    public TMP_Text level;
     private static int health=8;  //здоровье
     private static int maxHealth=8;   //max здоровье
     //private static float moveSpeed=5f; 
@@ -32,7 +33,13 @@ public class GameControll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //healthText.text = "Health: " + health;
+        if (LevelUp.Level > 1)
+        {
+            level.text = $"Уровень: {LevelUp.Level-1}";
+        }
+        else
+        level.text = $"Уровень: {LevelUp.Level}";
+
     }
     public static void DamagePlayer(int damage) //метод, чтобы наносить боль
     {
@@ -48,8 +55,9 @@ public class GameControll : MonoBehaviour
     }
     private static void KillPlayer()    //чтобы убить
     {
+        LevelUp.Level = 1;
         GameControll.instance.dead.gameObject.SetActive(true);
-        new WaitForSeconds(10f);
+        new WaitForSeconds(20f);
         SceneManager.LoadScene("SampleScene");
     }
 }

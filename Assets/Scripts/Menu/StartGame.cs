@@ -6,6 +6,7 @@ public class StartGame : MonoBehaviour
     public void PlayPressed()
     {
         SceneManager.LoadScene("BasementMain");
+        LevelUp.Level = 1;
     }
     public void ExitPressed()
     {
@@ -19,6 +20,10 @@ public class StartGame : MonoBehaviour
     public void NoExit()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+    public void Record()
+    {
+        SceneManager.LoadScene("RecordsScene");
     }
 
 }

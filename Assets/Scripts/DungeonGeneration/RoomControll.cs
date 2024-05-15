@@ -23,9 +23,19 @@ public class RoomControll : MonoBehaviour
     bool updatedRooms =false;
     public string GetRandomRoomName()
     {
-        string[] possibleRooms = new string[]        {
-            /*"Empty",*/ "Basic1", "Bas"
+        if (LevelUp.Level==1)
+        {
+            string[] possibleRooms = new string[]        {
+            /*"Empty",*/ "Basic1", "Bas1"
         }; return possibleRooms[Random.Range(0, possibleRooms.Length)];
+        }
+        else
+        {
+            string[] possibleRooms = new string[]        {
+            /*"Empty",*/ "Basic2", "Bas2"
+        }; return possibleRooms[Random.Range(0, possibleRooms.Length)];
+        }
+
     }
 
     private void Awake()
@@ -57,7 +67,7 @@ public class RoomControll : MonoBehaviour
                     foreach (EnemyControll enemy in enemies)
                     {
                         enemy.notInRoom = true;
-                        Debug.Log("Not in room");
+                       //Debug.Log("Not in room");
                     }
                     foreach (Door door in room.GetComponentsInChildren<Door>())
                     {
@@ -80,7 +90,7 @@ public class RoomControll : MonoBehaviour
                     foreach (EnemyControll enemy in enemies)
                     {
                         enemy.notInRoom = false;
-                        Debug.Log("In in room");
+                       // Debug.Log("In in room");
                     }
                     foreach (Door door in room.GetComponentsInChildren<Door>())
                     {
@@ -209,7 +219,12 @@ public class RoomControll : MonoBehaviour
             Destroy(bossRoom.gameObject);
             var roomToRemove = loadedRoom.Single(r=> r.x==tempRoom.x && r.y==tempRoom.y);
             loadedRoom.Remove(roomToRemove);
-            LoadRoom("End", tempRoom.x, tempRoom.y);
+            if (LevelUp.Level == 1)
+            {
+                LoadRoom("End", tempRoom.x, tempRoom.y);
+            }
+            else LoadRoom("End2", tempRoom.x, tempRoom.y);
+
         }
     }
 
