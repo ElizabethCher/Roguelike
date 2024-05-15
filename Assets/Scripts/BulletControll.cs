@@ -54,6 +54,9 @@ public class BulletControll : MonoBehaviour
             GameControll.DamagePlayer(1);
             Destroy(gameObject);
         }
-
+        if (collision.tag == "Obstacle")
+        {
+            Destroy(gameObject);
+        }
     }
 }
