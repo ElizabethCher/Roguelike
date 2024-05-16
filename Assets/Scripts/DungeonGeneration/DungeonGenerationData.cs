@@ -8,15 +8,4 @@ public class DungeonGenerationData : ScriptableObject
     public int iterationMin; //min число комнат
     public int iterationMax; //max число комнат
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

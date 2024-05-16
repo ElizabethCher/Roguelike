@@ -33,11 +33,11 @@ public class GameControll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (LevelUp.Level > 1)
-        {
-            level.text = $"Уровень: {LevelUp.Level-1}";
-        }
-        else
+        //if (LevelUp.Level > 1)
+        //{
+        //    level.text = $"Уровень: {LevelUp.Level-1}";
+        //}
+        //else
         level.text = $"Уровень: {LevelUp.Level}";
 
     }

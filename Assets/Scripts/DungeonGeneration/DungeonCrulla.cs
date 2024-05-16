@@ -15,15 +15,5 @@ public class DungeonCrulla : MonoBehaviour
         Position += directionMovementMap[toMove];   //выбираем сучайное направление
         return Position;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

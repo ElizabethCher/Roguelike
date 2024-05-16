@@ -6,8 +6,9 @@ public class RecordsControll : MonoBehaviour
     static int record;
     public  TMP_Text recordText;
     private void Awake()
-    {
-        record= 0;
+    { 
+        record= PlayerPrefs.GetInt("RecordPlayerLevel");
+       
     }
     private void Start()
     {
@@ -20,24 +21,13 @@ public class RecordsControll : MonoBehaviour
     }
     public static void RecordWrite()
     {
-        if (LevelUp.Level == 1) 
-        {
+        record = PlayerPrefs.GetInt("RecordPlayerLevel");
             if (LevelUp.Level > record)
             {
                 record = LevelUp.Level;
-                Debug.Log("New record!"+ record);
-                //recordText.text = $"{record}";
+
             }
-        }
-        else
-        {
-            if ((LevelUp.Level - 1) > record)
-            {
-                record = LevelUp.Level - 1;
-                Debug.Log("New record!" + record);
-               // recordText.text = $"{record}";
-            }
-        }
+  
         SaveRecord();
 
     }

@@ -4,21 +4,30 @@ using UnityEngine;
 public class LevelUp : MonoBehaviour
 {
     public static int Level = 1;
+    static bool trig = true;
 
+    private void Update()
+    {
+        trig=true;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Уровень: "+ Level);
-        if (collision.tag == "Player" && Level == 1)
+        if ( trig)
         {
-            SceneManager.LoadScene("BasementMain2");
+            if (collision.tag == "Player" && Level == 1)
+            {
+                SceneManager.LoadScene("BasementMain2");
+            }
+            else if (collision.tag == "Player" && Level == 2)
+            {
+                SceneManager.LoadScene("SampleScene");
+            }
             RecordsControll.RecordWrite();
+            Level++;
+
         }
-        else if (collision.tag == "Player" && Level == 3)
-        {
-            SceneManager.LoadScene("SampleScene");
-            RecordsControll.RecordWrite();
-        }
-        Level++;
+        trig = false;
+
     }
 
 }
