@@ -8,6 +8,7 @@ public class GameControll : MonoBehaviour
     public static GameControll instance;
     //public TMP_Text healthText;
     public TMP_Text dead;
+    public GameObject port;
     public TMP_Text level;
     private static int health=8;  //здоровье
     private static int maxHealth=8;   //max здоровье
@@ -60,4 +61,5 @@ public class GameControll : MonoBehaviour
         new WaitForSeconds(20f);
         SceneManager.LoadScene("SampleScene");
     }
+
 }

@@ -15,13 +15,16 @@ public class EnemyControll : MonoBehaviour
     };
     public enum EnemyType   //тип противника
     {
+        Bos,
         Melee,  //противник ближнего боя
         Ranged  //противник дальнего боя
     };
+
+    public int health;
     public bool notInRoom = false;
     public GameObject bulletPrefad; //пуля
     GameObject player; //игрок
-    public EnemyState currState= EnemyState.Idle; //по умолчанию враг блуждает
+    public EnemyState currState= EnemyState.Idle; //по умолчанию враг стоит
     public EnemyType enemyType;
     public float range; //расстояние на котором враг видит
     public float speed; //скорость противника
@@ -114,9 +117,20 @@ public class EnemyControll : MonoBehaviour
     }
     public void Death()
     {
-        //RoomControll.instance.UpdateRoom();
-        RoomControll.instance.StartCoroutine(RoomControll.instance.RoomCoroutine());
-        Destroy(gameObject);
+        health -= 1;
+        if (health <= 0 && enemyType==EnemyType.Bos)
+        {
+            RoomControll.instance.StartCoroutine(RoomControll.instance.RoomCoroutine());
+            Destroy(gameObject);
+            GameControll.instance.port.SetActive(true);
+            GameControll.instance.port.transform.position =transform.position;
+        }
+        else if (health <= 0) 
+        {
+            RoomControll.instance.StartCoroutine(RoomControll.instance.RoomCoroutine());
+            Destroy(gameObject);
+        }
+
     }
     void Attack()
     {
@@ -130,6 +144,13 @@ public class EnemyControll : MonoBehaviour
                     break;
                 case EnemyType.Ranged:
                     GameObject bullet = Instantiate(bulletPrefad, transform.position, Quaternion.identity) as GameObject; //игровой объект пули
+                    bullet.GetComponent<BulletControll>().GetPlayer(player.transform);
+                    bullet.AddComponent<Rigidbody2D>().gravityScale = 0;
+                    bullet.GetComponent<BulletControll>().isEnemyBullet = true; //вражеская я ли пуля
+                    StartCoroutine(CoolDown());
+                    break;
+                case EnemyType.Bos:
+                    bullet = Instantiate(bulletPrefad, transform.position, Quaternion.identity) as GameObject; //игровой объект пули
                     bullet.GetComponent<BulletControll>().GetPlayer(player.transform);
                     bullet.AddComponent<Rigidbody2D>().gravityScale = 0;
                     bullet.GetComponent<BulletControll>().isEnemyBullet = true; //вражеская я ли пуля

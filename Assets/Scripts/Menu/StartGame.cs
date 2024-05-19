@@ -7,6 +7,7 @@ public class StartGame : MonoBehaviour
     {
         SceneManager.LoadScene("BasementMain");
         LevelUp.Level = 1;
+        LevelUp.trig = true;
     }
     public void ExitPressed()
     {

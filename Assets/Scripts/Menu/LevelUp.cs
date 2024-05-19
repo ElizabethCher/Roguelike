@@ -4,7 +4,7 @@ using UnityEngine;
 public class LevelUp : MonoBehaviour
 {
     public static int Level = 1;
-    static bool trig = true;
+    public static bool trig = true;
 
     private void Update()
     {
@@ -17,13 +17,14 @@ public class LevelUp : MonoBehaviour
             if (collision.tag == "Player" && Level == 1)
             {
                 SceneManager.LoadScene("BasementMain2");
+                Level++;
             }
             else if (collision.tag == "Player" && Level == 2)
             {
                 SceneManager.LoadScene("SampleScene");
             }
             RecordsControll.RecordWrite();
-            Level++;
+
 
         }
         trig = false;
